@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "Java Programming and Software Engineering Fundamentals/2. Java Programming - Solving Problems with Software/helper_source_code/commons-csv-1.10.0/commons-csv-1.10.0.jar"
+    ]
+}

@@ -245,6 +245,7 @@ public class FileResource {
             Reader input = new StringReader(mySource);
             if (withHeader) {
                 return new CSVParser(input, CSVFormat.EXCEL.withHeader().withDelimiter(delim));
+                // return new CSVParser(input, CSVFormat.Builder.setDelimiter()); 
             }
             else {
                 return new CSVParser(input, CSVFormat.EXCEL.withDelimiter(delim));

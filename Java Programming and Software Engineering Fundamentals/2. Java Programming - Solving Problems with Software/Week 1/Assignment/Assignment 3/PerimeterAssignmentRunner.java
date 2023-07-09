@@ -21,28 +21,57 @@ public class PerimeterAssignmentRunner {
     }
 
     public int getNumPoints (Shape s) {
-        // Put code here
-        return 0;
+        Iterable<Point> all_points = s.getPoints();
+        int counter = 0;
+        for (var p : all_points){
+            counter++;
+        }
+        return counter;
     }
 
     public double getAverageLength(Shape s) {
-        // Put code here
-        return 0.0;
+        double lengths = getPerimeter(s);
+        int points = getNumPoints(s);
+        double avgLength = lengths/points;
+
+        return avgLength;
     }
 
     public double getLargestSide(Shape s) {
-        // Put code here
-        return 0.0;
+        double largestSide = 0.0;
+        Point prevPt = s.getLastPoint();
+        for (Point currPt : s.getPoints()) {
+            double currDist = prevPt.distance(currPt);
+            if (currDist > largestSide) {
+                largestSide = currDist;
+            }
+        }
+        return largestSide;
     }
 
     public double getLargestX(Shape s) {
-        // Put code here
-        return 0.0;
+        double largestX = Double.NEGATIVE_INFINITY;
+        for (Point currPt : s.getPoints()) {
+            if (currPt.getX() > largestX){
+                largestX = currPt.getX();
+            }
+        }
+        return largestX;
     }
 
     public double getLargestPerimeterMultipleFiles() {
-        // Put code here
-        return 0.0;
+        DirectoryResource dr = new DirectoryResource();
+        double maxPerimeter = 0;
+        double max_perim = 0.0;
+        for (File f : dr.selectedFiles()) {
+            FileResource fr = new FileResource(f);
+            Shape s = new Shape(fr);
+            double perimeter = getPerimeter(s);
+            if (perimeter > maxPerimeter){
+                max_perim = perimeter;
+            }
+        }
+        return max_perim;
     }
 
     public String getFileWithLargestPerimeter() {
@@ -55,7 +84,15 @@ public class PerimeterAssignmentRunner {
         FileResource fr = new FileResource();
         Shape s = new Shape(fr);
         double length = getPerimeter(s);
+        double numpoints = getNumPoints(s);
+        double avgLength = getAverageLength(s);
+        double largestSide = getLargestSide(s);
+        double largestX = getLargestX(s);
         System.out.println("perimeter = " + length);
+        System.out.println("num points = " + numpoints);
+        System.out.println("avgLength = " + avgLength);
+        System.out.println("largestSide = " + largestSide);
+        System.out.println("largestX = " + largestX);
     }
     
     public void testPerimeterMultipleFiles() {
