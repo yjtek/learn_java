@@ -1,4 +1,4 @@
-import edu.duke.*;
+import helper_source_code.edu.duke.*;
 public class HelloWorld {
     // public void runHello() {
     public static void main(String[] args){
