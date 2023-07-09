@@ -1,4 +1,4 @@
-package edu.duke;
+package helper_source_code.edu.duke;
 
 import java.io.File;
 import javax.swing.JFileChooser;
