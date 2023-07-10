@@ -1,4 +1,4 @@
-import helper_source_code.edu.duke.*;
+import edu.duke.*;
 
 public class PerimeterRunner {
     public double getPerimeter (Shape s) {
