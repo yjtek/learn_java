@@ -11,6 +11,7 @@ public class PerimeterAssignmentRunner {
         for (Point currPt : s.getPoints()) {
             // Find distance from prevPt point to currPt 
             double currDist = prevPt.distance(currPt);
+            System.out.println(currDist);
             // Update totalPerim by currDist
             totalPerim = totalPerim + currDist;
             // Update prevPt to be currPt
@@ -165,9 +166,9 @@ public class PerimeterAssignmentRunner {
 
     public static void main (String[] args) {
         PerimeterAssignmentRunner pr = new PerimeterAssignmentRunner();
-        // pr.testPerimeter();
+        pr.testPerimeter();
         // pr.testPerimeterMultipleFiles();
-        pr.testFileWithLargestPerimeter();
+        // pr.testFileWithLargestPerimeter();
         // pr.triangle();
     }
 }
