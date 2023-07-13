@@ -8,20 +8,20 @@ public class Exercise {
         FileResource fr = new FileResource("exportdata.csv");
         // FileResource fr = new FileResource("exportsmall.csv");
         CSVParser parser = fr.getCSVParser();
-        System.out.println(countryInfo(parser, "Malaysia"));
+        System.out.println(countryInfo(parser, "Nauru"));
 
         fr = new FileResource("exportdata.csv");
         parser = fr.getCSVParser();
         // listExportersTwoProducts(parser, "gold", "diamonds");
-        listExportersTwoProducts(parser, "tobacco", "textiles");
+        listExportersTwoProducts(parser, "gold", "diamonds");
         
         fr = new FileResource("exportdata.csv");
         parser = fr.getCSVParser();        
-        System.out.println(numberOfExporters(parser, "gold"));
+        System.out.println(numberOfExporters(parser, "sugar"));
 
         fr = new FileResource("exportdata.csv");
         parser = fr.getCSVParser();        
-        bigExporters(parser, "gold");
+        bigExporters(parser, "$999,999,999,999");
 
     }
 
