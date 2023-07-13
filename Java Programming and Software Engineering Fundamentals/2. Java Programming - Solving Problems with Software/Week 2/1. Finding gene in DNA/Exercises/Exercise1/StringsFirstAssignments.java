@@ -1,4 +1,4 @@
-package Exercises.Exercise1;
+package Exercise1;
 
 import edu.duke.*;
 
