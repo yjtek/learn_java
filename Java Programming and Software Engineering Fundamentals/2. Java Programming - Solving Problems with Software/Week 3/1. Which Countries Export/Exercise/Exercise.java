@@ -13,11 +13,11 @@ public class Exercise {
         fr = new FileResource("exportdata.csv");
         parser = fr.getCSVParser();
         // listExportersTwoProducts(parser, "gold", "diamonds");
-        listExportersTwoProducts(parser, "gold", "diamonds");
+        listExportersTwoProducts(parser, "cotton", "flowers");
         
         fr = new FileResource("exportdata.csv");
         parser = fr.getCSVParser();        
-        System.out.println(numberOfExporters(parser, "sugar"));
+        System.out.println(numberOfExporters(parser, "cocoa"));
 
         fr = new FileResource("exportdata.csv");
         parser = fr.getCSVParser();        
