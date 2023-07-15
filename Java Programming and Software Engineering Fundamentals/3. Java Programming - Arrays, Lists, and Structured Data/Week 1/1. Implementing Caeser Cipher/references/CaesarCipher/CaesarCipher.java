@@ -7,8 +7,7 @@ public class CaesarCipher {
         //Write down the alphabet
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         //Compute the shifted alphabet
-        String shiftedAlphabet = alphabet.substring(key)+
-        alphabet.substring(0,key);
+        String shiftedAlphabet = alphabet.substring(key)+alphabet.substring(0,key);
         //Count from 0 to < length of encrypted, (call it i)
         for(int i = 0; i < encrypted.length(); i++) {
             //Look at the ith character of encrypted (call it currChar)
