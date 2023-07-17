@@ -5,6 +5,10 @@ public class exercise {
     public class WordLengths {
         public void countWordLengths(FileResource resource, int[] counts){
             for (String s: resource.words()){
+                if (s.length() == 1 && !Character.isLetter(s.charAt(0))) {
+                    continue;
+                }
+
                 if (!Character.isLetter(s.charAt(0))){
                     s = s.substring(1);
                 } 
@@ -27,8 +31,8 @@ public class exercise {
         }
 
         public void testCountWordLengths(){
-            FileResource fr = new FileResource("smallHamlet.txt");
-            int[] counts = new int[31];
+            FileResource fr = new FileResource("lotsOfWords.txt");
+            int[] counts = new int[50];
             countWordLengths(fr, counts);
         }
     }
@@ -85,9 +89,9 @@ public class exercise {
                 }
             }
 
-            // for (int i=0; i < counts.length; i++) {
-            //     System.out.println(alphabets.charAt(i) + ": " + counts[i]);
-            // }
+            for (int i=0; i < counts.length; i++) {
+                System.out.println(alphabets.charAt(i) + ": " + counts[i]);
+            }
 
             return counts;
         }
@@ -140,22 +144,78 @@ public class exercise {
         }
     }
 
+    public class Simple{ 
+        private String word; 
+        private String phrase; 
+        public Simple(int number, String w) { 	
+             word = w; 	
+             phrase = mystery(number, w);          
+        }   
+        private String mystery(int num, String s) {  	
+             String answer = "";  	
+             for (int k=0; k<num; k++) {     	
+                  answer = answer + s;  	
+             }  	
+             return answer; 
+        } 
+   
+        public String toString() { 	
+             return phrase + " is " + word + " repeated";
+        }
+    }
+    
+    public class TestSimple {
+        public void print() {  	
+            Simple item = new Simple(3, "blue");     	
+            // System.out.println(String.valueOf(item));
+            System.out.println(item);
+            System.out.println(item.mystery(5, "ho"));
+        }
+    }
+
     public static void main(String[] args){
         exercise e = new exercise();
         // WordLengths wl = e.new WordLengths();
         // wl.testCountWordLengths();
 
         // CaesarCipher cc = new CaesarCipher();
-        // String encryptedMessage = cc.encrypt("Just a test string with lots of eeeeeeeeeeeeeeeees", 2);
-        // CaesarBreaker cb = e.new CaesarBreaker();
+        // String encryptedMessage = cc.encrypt("Can you imagine life WITHOUT the internet AND computers in your pocket?", 15);
+        // String encryptedMessage = cc.encryptTwoKeys("Can you imagine life WITHOUT the internet AND computers in your pocket?", 21, 8);
         // System.out.println(encryptedMessage);
+        
+        // CaesarBreaker cb = e.new CaesarBreaker();
         // System.out.println(cb.decrypt(encryptedMessage));
         
         // CaesarBreaker cb = e.new CaesarBreaker();
         // cb.testHalfOfString();
 
-        CaesarBreaker cb = e.new CaesarBreaker();
-        System.out.println(cb.decryptTwoKeys("Gwpv c vbuq pvokki yfve iqqu qc bgbgbgbgbgbgbgbgbu"));
+        // CaesarBreaker cb = e.new CaesarBreaker();
+        // System.out.println(cb.decryptTwoKeys("Gwpv c vbuq pvokki yfve iqqu qc bgbgbgbgbgbgbgbgbu"));
+        // System.out.println(cb.decryptTwoKeys("Akag tjw Xibhr awoa aoee xakex znxag xwko"));
+        // FileResource fr = new FileResource("mysteryTwoKeysPractice.txt");
+        // String message = fr.asString();
+        // System.out.println(cb.decryptTwoKeys(message));
 
+        // CaesarCipher cc = new CaesarCipher();
+        // System.out.println(cc.encryptTwoKeys("Top ncmy qkff vi vguv vbg ycpx", 26-2, 26-20));
+
+        // WordLengths wl = e.new WordLengths();
+        // FileResource fr = new FileResource("manywords.txt");
+        // int[] counts = new int[50];
+        // wl.countWordLengths(fr, counts);
+
+        // CaesarCipher cc = new CaesarCipher();
+        // System.out.println(cc.encryptTwoKeys("Hfs cpwewloj loks cj Hoto kyg Cyy.", 12, 2));
+
+        // CaesarBreaker cb = e.new CaesarBreaker();
+        // System.out.println(cb.decryptTwoKeys("Aal uttx hm aal Qtct Fhljha pl Wbdl. Pvxvxlx!"));
+
+        // CaesarBreaker cb = e.new CaesarBreaker();
+        // FileResource fr = new FileResource("mysteryTwoKeysQuiz.txt");
+        // String message = fr.asString();
+        // System.out.println(cb.decryptTwoKeys(message));
+
+        TestSimple ts = e.new TestSimple();
+        ts.print();
     }
 }
