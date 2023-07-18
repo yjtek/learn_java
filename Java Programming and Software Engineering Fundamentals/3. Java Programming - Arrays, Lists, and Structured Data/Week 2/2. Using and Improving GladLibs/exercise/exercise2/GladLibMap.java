@@ -7,6 +7,7 @@ public class GladLibMap {
 	private String mySource;
 	private int countWordSubstituted;
 	private ArrayList<String> wordsUsed;
+	private ArrayList<String> categoriesUsed;
 
 	private static String dataSourceURL = "http://dukelearntoprogram.com/course3/data";
 	private static String dataSourceDirectory = "data";
@@ -25,6 +26,7 @@ public class GladLibMap {
 		
 		mySource = source;
 		wordsUsed = new ArrayList<String>();
+		categoriesUsed = new ArrayList<String>();
 		countWordSubstituted = 0;
 	}
 	
@@ -64,9 +66,9 @@ public class GladLibMap {
 		}
 		String prefix = w.substring(0,first);
 		String suffix = w.substring(last+1);
-		
 		String sub = null;
 		int i = 0;
+
 		while (sub == null && i <= 100){
 			sub = getSubstitute(w.substring(first+1,last));
 			if (wordsUsed.indexOf(sub) != -1){
@@ -81,6 +83,9 @@ public class GladLibMap {
 			return "**ALL WORDS USED**";
 		} else {
 			countWordSubstituted++;
+			if (!categoriesUsed.contains(w.substring(first+1, last))){
+				categoriesUsed.add(w.substring(first+1, last));
+			}
 			return prefix+sub+suffix;
 		}
 	}
@@ -145,6 +150,20 @@ public class GladLibMap {
 		printOut(story, 60);
 	}
 	
+	public int totalWordsInMap(){
+		int totalWords = 0;
+		for (String key: myMap.keySet()){
+			totalWords += myMap.get(key).size();
+		}
+		return totalWords;
+	}
 
+	public int totalWordsConsidered(){
+		int totalWordsConsidered = 0;
+		for (int i=0; i < categoriesUsed.size(); i++){
+			totalWordsConsidered += myMap.get(categoriesUsed.get(i)).size();
+		}
+		return totalWordsConsidered;
+	}
 
 }

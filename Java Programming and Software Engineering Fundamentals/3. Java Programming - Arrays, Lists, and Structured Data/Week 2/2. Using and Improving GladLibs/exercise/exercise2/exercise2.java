@@ -60,20 +60,20 @@ public class exercise2 {
             FileResource fr = new FileResource();
             String dna = fr.asString();
             
-            buildCodonMap(0, dna);
-            System.out.println("Count unique codons: " + codonCounts.size());
-            System.out.println("Most common codon: " + getMostCommonCodon() + " || Count: " + codonCounts.get(getMostCommonCodon()));
-            printCodonCounts(0,5);
+            // buildCodonMap(0, dna);
+            // System.out.println("Count unique codons: " + codonCounts.size());
+            // System.out.println("Most common codon: " + getMostCommonCodon() + " || Count: " + codonCounts.get(getMostCommonCodon()));
+            // printCodonCounts(0,5);
 
             buildCodonMap(1, dna);
             System.out.println("Count unique codons: " + codonCounts.size());
             System.out.println("Most common codon: " + getMostCommonCodon() + " || Count: " + codonCounts.get(getMostCommonCodon()));
-            printCodonCounts(0,5);
+            printCodonCounts(5,7);
 
-            buildCodonMap(2, dna);
-            System.out.println("Count unique codons: " + codonCounts.size());
-            System.out.println("Most common codon: " + getMostCommonCodon() + " || Count: " + codonCounts.get(getMostCommonCodon()));
-            printCodonCounts(0,5);
+            // buildCodonMap(2, dna);
+            // System.out.println("Count unique codons: " + codonCounts.size());
+            // System.out.println("Most common codon: " + getMostCommonCodon() + " || Count: " + codonCounts.get(getMostCommonCodon()));
+            // printCodonCounts(0,5);
         }
     }
 
@@ -148,28 +148,32 @@ public class exercise2 {
 
         public void tester(){
             buildWordFileMap();
-            System.out.println("Maximum number of files a word is in: " + maxNumber());
+            // System.out.println("Maximum number of files a word is in: " + maxNumber());
             // System.out.println("All words with max number of occurences in files: " + wordsInNumFiles(maxNumber()));
-            for (String word: wordsInNumFiles(maxNumber())){
-                System.out.println("Word: " + word);
-                System.out.println("Word in files: ");
-                printFilesIn(word);
-            }
-            printFullMap();
+            // System.out.println("All words with max number of occurences in files: " + wordsInNumFiles(5));
+            // System.out.println(wordsInNumFiles(4).size());
+            // for (String word: wordsInNumFiles(maxNumber())){
+            // for (String word: wordsInNumFiles(5)){
+            //     System.out.println("Word: " + word);
+            //     System.out.println("Word in files: ");
+            //     printFilesIn(word);
+            // }
+            // printFullMap();
+            printFilesIn("red");
         }
     }
     
     public static void main(String[] args){
-        // exercise2 e2 = new exercise2();
+        exercise2 e2 = new exercise2();
         
         // CodonCount cc = e2.new CodonCount();
         // cc.tester();        
 
-        // WordsinFiles wif = e2.new WordsinFiles();
-        // wif.tester();
+        WordsinFiles wif = e2.new WordsinFiles();
+        wif.tester();
 
-        GladLibMap glm = new GladLibMap("data");
-        glm.makeStory();
+        // GladLibMap glm = new GladLibMap("data");
+        // glm.makeStory();
     }
 
     
