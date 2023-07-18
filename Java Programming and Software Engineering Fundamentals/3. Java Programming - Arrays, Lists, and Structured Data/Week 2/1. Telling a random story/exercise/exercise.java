@@ -16,7 +16,7 @@ public class exercise {
             myWords.clear();
             myFreqs.clear();
 
-            FileResource fr = new FileResource();
+            FileResource fr = new FileResource("testwordfreqs.txt");
             for (String word: fr.words()){
                 word = word.toLowerCase();
                 int idx = myWords.indexOf(word);
@@ -37,12 +37,11 @@ public class exercise {
             System.out.println(myWords.size());
 
             for (int i=0; i < myWords.size(); i++){
-                System.out.println(myWords.get(i));
-                System.out.println(myFreqs.get(i));
+                System.out.println("Word: " + myWords.get(i) + " || " + "Count: " + myFreqs.get(i));
             }
 
             int maxIdx = findIndexOfMax();
-            System.out.println(myWords.get(maxIdx) + " || " + myFreqs.get(maxIdx));
+            System.out.println("+++ Word occured most: " + myWords.get(maxIdx) + " || Count: " + myFreqs.get(maxIdx) + " +++");
         }
 
         public int findIndexOfMax(){
@@ -59,6 +58,8 @@ public class exercise {
 
     }
     
+    public class 
+
     public static void main(String[] args){
         exercise e = new exercise();
         WordFrequencies wf = e.new WordFrequencies();
