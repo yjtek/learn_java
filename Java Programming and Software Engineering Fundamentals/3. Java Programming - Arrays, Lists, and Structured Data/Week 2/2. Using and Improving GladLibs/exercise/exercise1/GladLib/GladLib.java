@@ -11,11 +11,19 @@ public class GladLib {
 	private ArrayList<String> nameList;
 	private ArrayList<String> animalList;
 	private ArrayList<String> timeList;
-	
+		
 	private Random myRandom;
 	
 	private static String dataSourceURL = "http://dukelearntoprogram.com/course3/data";
 	private static String dataSourceDirectory = "data";
+
+	// YJ Addition:
+	private String mySource;
+	private ArrayList<String> verbList;
+	private ArrayList<String> fruitList;
+	private ArrayList<String> wordsUsed;
+	private int countWordSubstituted;
+	//
 	
 	public GladLib(){
 		initializeFromSource(dataSourceDirectory);
@@ -25,6 +33,11 @@ public class GladLib {
 	public GladLib(String source){
 		initializeFromSource(source);
 		myRandom = new Random();
+		// YJ Addition:
+		mySource = source;
+		wordsUsed = new ArrayList<String>();
+		countWordSubstituted = 0;
+		//
 	}
 	
 	private void initializeFromSource(String source) {
@@ -35,6 +48,12 @@ public class GladLib {
 		nameList = readIt(source+"/name.txt");		
 		animalList = readIt(source+"/animal.txt");
 		timeList = readIt(source+"/timeframe.txt");		
+
+		// YJ Addition:
+		verbList = readIt(source+"/verb.txt");
+		fruitList = readIt(source+"/fruit.txt");
+		//
+
 	}
 	
 	private String randomFrom(ArrayList<String> source){
@@ -67,6 +86,16 @@ public class GladLib {
 		if (label.equals("number")){
 			return ""+myRandom.nextInt(50)+5;
 		}
+
+		// YJ Addition:
+		if (label.equals("verb")){
+			return randomFrom(verbList);
+		}
+		if (label.equals("fruit")){
+			return randomFrom(fruitList);
+		}
+		//
+
 		return "**UNKNOWN**";
 	}
 	
@@ -78,8 +107,25 @@ public class GladLib {
 		}
 		String prefix = w.substring(0,first);
 		String suffix = w.substring(last+1);
-		String sub = getSubstitute(w.substring(first+1,last));
-		return prefix+sub+suffix;
+		
+		String sub = null;
+		int i = 0;
+		while (sub == null && i <= 100){
+			sub = getSubstitute(w.substring(first+1,last));
+			if (wordsUsed.indexOf(sub) != -1){
+				sub = null;
+			} 
+			else {
+				wordsUsed.add(sub);
+			}
+		}
+
+		if (i == 100 && sub==null){
+			return "**ALL WORDS USED**";
+		} else {
+			countWordSubstituted++;
+			return prefix+sub+suffix;
+		}
 	}
 	
 	private void printOut(String s, int lineWidth){
@@ -92,10 +138,13 @@ public class GladLib {
 			System.out.print(w+" ");
 			charsWritten += w.length() + 1;
 		}
+
+		System.out.println("\n Count of words substituted: "+countWordSubstituted);
 	}
 	
 	private String fromTemplate(String source){
 		String story = "";
+		wordsUsed.clear();
 		if (source.startsWith("http")) {
 			URLResource resource = new URLResource(source);
 			for(String word : resource.words()){
@@ -130,7 +179,12 @@ public class GladLib {
 	
 	public void makeStory(){
 	    System.out.println("\n");
-		String story = fromTemplate("data/madtemplate.txt");
+		
+		// YJ modification
+		// String story = fromTemplate(mySource + "/madtemplate.txt");
+		String story = fromTemplate(mySource + "/madtemplate2.txt");
+		//
+
 		printOut(story, 60);
 	}
 	
