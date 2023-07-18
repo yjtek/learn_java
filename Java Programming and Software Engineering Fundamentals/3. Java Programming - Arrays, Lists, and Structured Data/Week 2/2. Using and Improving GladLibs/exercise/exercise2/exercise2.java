@@ -1,5 +1,3 @@
-package exercise2;
-
 import java.util.HashMap;
 import java.io.File;
 import java.util.ArrayList;
@@ -162,13 +160,16 @@ public class exercise2 {
     }
     
     public static void main(String[] args){
-        exercise2 e2 = new exercise2();
+        // exercise2 e2 = new exercise2();
         
         // CodonCount cc = e2.new CodonCount();
         // cc.tester();        
 
-        WordsinFiles wif = e2.new WordsinFiles();
-        wif.tester();
+        // WordsinFiles wif = e2.new WordsinFiles();
+        // wif.tester();
+
+        GladLibMap glm = new GladLibMap("data");
+        glm.makeStory();
     }
 
     

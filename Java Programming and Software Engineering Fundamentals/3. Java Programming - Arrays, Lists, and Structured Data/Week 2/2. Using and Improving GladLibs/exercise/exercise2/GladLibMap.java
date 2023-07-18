@@ -1,5 +1,3 @@
-package exercise2;
-
 import edu.duke.*;
 import java.util.*;
 
@@ -13,51 +11,32 @@ public class GladLibMap {
 	private static String dataSourceURL = "http://dukelearntoprogram.com/course3/data";
 	private static String dataSourceDirectory = "data";
 
-	// YJ Addition:
-	// private ArrayList<String> adjectiveList;
-	// private ArrayList<String> nounList;
-	// private ArrayList<String> colorList;
-	// private ArrayList<String> countryList;
-	// private ArrayList<String> nameList;
-	// private ArrayList<String> animalList;
-	// private ArrayList<String> timeList;	
-	// private ArrayList<String> verbList;
-	// private ArrayList<String> fruitList;
 	private HashMap<String, ArrayList<String>> myMap;
-	//
 
-	
-	public GladLibMap(){
-		initializeFromSource(dataSourceDirectory);
-		myRandom = new Random();
-	}
+	// public GladLibMap(){
+	// 	initializeFromSource(dataSourceDirectory);
+	// 	myRandom = new Random();
+	// }
 	
 	public GladLibMap(String source){
+		myMap = new HashMap<String, ArrayList<String>>();
 		initializeFromSource(source);
 		myRandom = new Random();
-		// YJ Addition:
+		
 		mySource = source;
 		wordsUsed = new ArrayList<String>();
 		countWordSubstituted = 0;
-		myMap = new HashMap<String, ArrayList<String>>();
-		//
 	}
 	
 	private void initializeFromSource(String source) {
-		// adjectiveList= readIt(source+"/adjective.txt");	
-		// nounList = readIt(source+"/noun.txt");
-		// colorList = readIt(source+"/color.txt");
-		// countryList = readIt(source+"/country.txt");
-		// nameList = readIt(source+"/name.txt");		
-		// animalList = readIt(source+"/animal.txt");
-		// timeList = readIt(source+"/timeframe.txt");		
+		ArrayList<String> wordLists = new ArrayList<String>(Arrays.asList(
+			"adjective", "noun", "color", "country", "name", "animal", "timeframe", 
+			"verb", "fruit"
+		));
 
-		// // YJ Addition:
-		// verbList = readIt(source+"/verb.txt");
-		// fruitList = readIt(source+"/fruit.txt");
-		// //
-		
-
+		for (int i=0; i < wordLists.size(); i++){
+			myMap.put(wordLists.get(i), readIt(source + "/" + wordLists.get(i) + ".txt"));
+		}
 	}
 	
 	private String randomFrom(ArrayList<String> source){
@@ -66,41 +45,15 @@ public class GladLibMap {
 	}
 	
 	private String getSubstitute(String label) {
-		if (label.equals("country")) {
-			return randomFrom(countryList);
-		}
-		if (label.equals("color")){
-			return randomFrom(colorList);
-		}
-		if (label.equals("noun")){
-			return randomFrom(nounList);
-		}
-		if (label.equals("name")){
-			return randomFrom(nameList);
-		}
-		if (label.equals("adjective")){
-			return randomFrom(adjectiveList);
-		}
-		if (label.equals("animal")){
-			return randomFrom(animalList);
-		}
-		if (label.equals("timeframe")){
-			return randomFrom(timeList);
-		}
-		if (label.equals("number")){
+		if (label == "number") {
 			return ""+myRandom.nextInt(50)+5;
 		}
-
-		// YJ Addition:
-		if (label.equals("verb")){
-			return randomFrom(verbList);
+		else if (myMap.containsKey(label)) {
+			return randomFrom(myMap.get(label));
 		}
-		if (label.equals("fruit")){
-			return randomFrom(fruitList);
+		else {
+			return "**UNKNOWN**";
 		}
-		//
-
-		return "**UNKNOWN**";
 	}
 	
 	private String processWord(String w){
