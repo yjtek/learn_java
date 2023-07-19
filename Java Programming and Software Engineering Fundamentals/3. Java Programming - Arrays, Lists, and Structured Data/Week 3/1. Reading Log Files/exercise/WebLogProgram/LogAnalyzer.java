@@ -1,4 +1,4 @@
-
+package WebLogProgram;
 /**
  * Write a description of class LogAnalyzer here.
  * 
@@ -9,23 +9,26 @@
 import java.util.*;
 import edu.duke.*;
 
-public class LogAnalyzer
-{
-     private ArrayList<LogEntry> records;
+public class LogAnalyzer {
+    private ArrayList<LogEntry> records;
      
-     public LogAnalyzer() {
-         // complete constructor
-     }
+    public LogAnalyzer() {
+        records = new ArrayList<LogEntry>();
+    }
         
-     public void readFile(String filename) {
-         // complete method
-     }
+    public void readFile(String filename) {
+        FileResource fr = new FileResource();
+        for (String line: fr.lines()){
+            LogEntry le = WebLogParser.parseEntry(line);
+            records.add(le);
+        }
+    }
         
-     public void printAll() {
-         for (LogEntry le : records) {
-             System.out.println(le);
-         }
-     }
+    public void printAll() {
+        for (LogEntry le : records) {
+            System.out.println(le);
+        }
+    }
      
      
 }

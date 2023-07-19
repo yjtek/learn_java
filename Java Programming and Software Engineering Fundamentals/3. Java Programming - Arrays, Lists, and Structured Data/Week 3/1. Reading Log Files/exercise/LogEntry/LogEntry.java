@@ -1,4 +1,4 @@
-
+package LogEntry;
 /**
  * Write a description of class LogRecord here.
  * 
