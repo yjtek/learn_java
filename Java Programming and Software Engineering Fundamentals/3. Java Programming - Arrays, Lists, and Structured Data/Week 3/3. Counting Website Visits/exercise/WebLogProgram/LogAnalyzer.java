@@ -7,6 +7,9 @@ package WebLogProgram;
  */
 
 import java.util.*;
+import java.text.SimpleDateFormat;
+
+// import LogEntry.LogEntry;
 import edu.duke.*;
 
 public class LogAnalyzer {
@@ -20,7 +23,9 @@ public class LogAnalyzer {
 
         // FileResource fr = new FileResource("short-test_log");
         // FileResource fr = new FileResource("weblog-short_log");
-        FileResource fr = new FileResource("weblog1_log");
+        // FileResource fr = new FileResource("weblog1_log");
+        FileResource fr = new FileResource("weblog2_log");
+        // FileResource fr = new FileResource("weblog3-short_log");
         for (String line: fr.lines()){
             LogEntry le = WebLogParser.parseEntry(line);
             records.add(le);
@@ -82,6 +87,99 @@ public class LogAnalyzer {
             }
         }
         return uniqueIPs.size();
+    }
+
+    public HashMap<String, Integer> countVisitsPerIP(){
+        HashMap<String, Integer> visitCounts = new HashMap<String, Integer>();
+        
+        for (LogEntry le: records){
+            String ipAddr = le.getIpAddress();
+            if (visitCounts.containsKey(ipAddr)){
+                int existingCount = visitCounts.get(ipAddr);
+                visitCounts.put(ipAddr, existingCount+1);
+            }
+            else {
+                visitCounts.put(ipAddr, 1);
+            }
+        }
+        return visitCounts;
+    }
+
+    public int mostNumberVisitsByIP(HashMap<String,Integer> visitCounts){
+        int maxVisits = 0;
+        for(String key: visitCounts.keySet()){
+            if (visitCounts.get(key) > maxVisits){
+                maxVisits = visitCounts.get(key);
+            }
+        }
+        return maxVisits;
+    }
+
+    public ArrayList<String> iPsMostVisits(HashMap<String, Integer> visitCounts){
+        int maxVisits = mostNumberVisitsByIP(visitCounts);
+        ArrayList<String> iPsWithMostVisits = new ArrayList<String>();
+        for (String key: visitCounts.keySet()){
+            if (visitCounts.get(key) == maxVisits){
+                iPsWithMostVisits.add(key);
+            }
+        }
+        return iPsWithMostVisits;
+    }
+
+    public HashMap<String, ArrayList<String>> iPsForDays(){
+    // public void iPsForDays(){
+        HashMap<String, ArrayList<String>> mapDateToIPs = new HashMap<String, ArrayList<String>>();
+        
+        for (LogEntry le: records){
+            String[] leDate = le.getAccessTime().toString().split("\\s");
+            String MMMDD = leDate[1] + " " + leDate[2];
+            String ipAddr = le.getIpAddress();
+            
+            if (mapDateToIPs.containsKey(MMMDD)){
+                mapDateToIPs.get(MMMDD).add(ipAddr);
+            }
+            else {
+                ArrayList<String> newArray = new ArrayList<String>();
+                newArray.add(ipAddr);
+                mapDateToIPs.put(MMMDD, newArray);
+            }
+        }
+
+        // for (String key: mapDateToIPs.keySet()){
+        //     System.out.println(key + mapDateToIPs.get(key));
+        // }
+
+        return mapDateToIPs;
+    }
+
+    public String dayWithMostIPVisits(HashMap<String, ArrayList<String>> mapDateToIPs){
+        int maxIPCount = 0;
+        String maxIPCountDay = "";
+        for (String day: mapDateToIPs.keySet()){
+            int countIPDays = mapDateToIPs.get(day).size();
+            if (countIPDays > maxIPCount){
+                maxIPCountDay = day;
+            }
+        }
+        return maxIPCountDay;
+    }
+
+    public ArrayList<String> iPsWithMostVisitsOnDay(
+        HashMap<String, ArrayList<String>> mapDateToIPs, 
+        String date_MMMDD
+    ) {
+        ArrayList<String> ipOnDate = mapDateToIPs.get(date_MMMDD);
+        HashMap<String, Integer> countVisitsPerIP = new HashMap<String, Integer>();
+        for (String ip: ipOnDate){
+            if (countVisitsPerIP.containsKey(ip)){
+                countVisitsPerIP.put(ip, countVisitsPerIP.get(ip) + 1);
+            }
+            else {
+                countVisitsPerIP.put(ip, 1);
+            }
+        }
+        ArrayList<String> ipList = iPsMostVisits(countVisitsPerIP);
+        return ipList;
     }
      
 }

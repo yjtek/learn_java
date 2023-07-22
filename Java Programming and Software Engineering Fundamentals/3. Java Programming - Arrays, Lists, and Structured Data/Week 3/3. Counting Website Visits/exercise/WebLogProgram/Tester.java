@@ -24,7 +24,8 @@ public class Tester {
 
     public void testUniqueIP(){
         LogAnalyzer la = new LogAnalyzer();
-        la.readFile("short-test_log");
+        // la.readFile("short-test_log");
+        la.readFile("weblog2_log");
         System.out.println(la.countUniqueIPs());
     }
 
@@ -38,19 +39,72 @@ public class Tester {
         LogAnalyzer la = new LogAnalyzer();
         // la.readFile("short-test_log");
         // la.readFile("weblog-short_log");
-        la.readFile("weblog1_log");
-        System.out.println(la.uniqueIPVisitsOnDay("Mar 17"));
+        la.readFile("weblog2_log");
+        System.out.println(la.uniqueIPVisitsOnDay("Sep 24"));
     }
 
     public void testCountUniqueIPsInRange(){
         LogAnalyzer la = new LogAnalyzer();
         // la.readFile("short-test_log");
+        la.readFile("weblog2_log");
+        System.out.println(la.countUniqueIPsInRange(400,499));
+    }
+
+    public void testCountVisitsPerIP(){
+        LogAnalyzer la = new LogAnalyzer();
+        // la.readFile("short-test_log");
+        // la.readFile("weblog3-short_log");
+        la.readFile("weblog2_log");
+
+        System.out.println(la.countVisitsPerIP());
+    }
+
+    public void testMostNumberVisitsByIP(){
+        LogAnalyzer la = new LogAnalyzer();
+        // la.readFile("short-test_log");
+        // la.readFile("weblog3-short_log");
+        la.readFile("weblog2_log");
+        HashMap<String, Integer> visitCounts = la.countVisitsPerIP();
+        System.out.println(la.mostNumberVisitsByIP(visitCounts));
+    }
+    
+    public void testIPsMostVisits(){
+        LogAnalyzer la = new LogAnalyzer();
+        // la.readFile("weblog3-short_log");
+        la.readFile("weblog2_log");
+        HashMap<String, Integer> visitCounts = la.countVisitsPerIP();
+        ArrayList<String> ipWithMostVisits = la.iPsMostVisits(visitCounts);
+        for (String ip: ipWithMostVisits){
+            System.out.println(ip);
+        }
+    }
+
+    public void testIPsForDays(){
+        LogAnalyzer la = new LogAnalyzer();
+        // la.readFile("weblog3-short_log");
         la.readFile("weblog1_log");
-        System.out.println(la.countUniqueIPsInRange(300,399));
+        la.iPsForDays();
+    }
+
+    public void testDayWithMostIPVisits(){
+        LogAnalyzer la = new LogAnalyzer();
+        // la.readFile("weblog3-short_log");
+        // la.readFile("weblog1_log");
+        la.readFile("weblog2_log");
+        HashMap<String, ArrayList<String>> mapDateToIPs = la.iPsForDays();
+        System.out.println(la.dayWithMostIPVisits(mapDateToIPs));
+    }
+
+    public void testIPsWithMostVisitsOnDay(){
+        LogAnalyzer la = new LogAnalyzer();
+        // la.readFile("weblog3-short_log");
+        la.readFile("weblog2_log");
+        HashMap<String, ArrayList<String>> mapDateToIPs = la.iPsForDays();
+        System.out.println(la.iPsWithMostVisitsOnDay(mapDateToIPs, "Sep 29"));
     }
 
     public static void main(String[] args){
         Tester t = new Tester();
-        t.testCountUniqueIPsInRange();
+        t.testIPsWithMostVisitsOnDay();
     }
 }
