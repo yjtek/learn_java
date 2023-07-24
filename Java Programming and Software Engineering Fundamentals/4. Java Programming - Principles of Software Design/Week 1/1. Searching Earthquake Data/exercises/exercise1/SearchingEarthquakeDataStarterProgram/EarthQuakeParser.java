@@ -16,6 +16,7 @@ import exercise1.edu.duke.*;
 public class EarthQuakeParser {
     public EarthQuakeParser() {
         // TODO Auto-generated constructor stub
+        // System.out.println("EarthQuakeParser instantiation");
     }
 
     public ArrayList<QuakeEntry> read(String source) {
