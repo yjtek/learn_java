@@ -1,4 +1,4 @@
-
+package exercise1.SearchingEarthquakeDataStarterProgram;
 /**
  * Find N-closest quakes
  * 

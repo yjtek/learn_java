@@ -1,3 +1,4 @@
+package exercise1.SearchingEarthquakeDataStarterProgram;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
+
+import exercise1.edu.duke.*;
 
 public class EarthQuakeParser {
     public EarthQuakeParser() {

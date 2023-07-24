@@ -1,5 +1,8 @@
+package exercise1.SearchingEarthquakeDataStarterProgram;
+
 import java.util.*;
-import edu.duke.*;
+
+import exercise1.edu.duke.*;
 
 public class EarthQuakeClient {
     public EarthQuakeClient() {
