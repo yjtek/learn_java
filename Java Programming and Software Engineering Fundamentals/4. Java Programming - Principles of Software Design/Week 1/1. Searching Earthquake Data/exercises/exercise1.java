@@ -3,7 +3,7 @@ import exercise1.edu.duke.*;
 
 public class exercise1 {
     public static void main(String[] args){
-        // EarthQuakeClient eqc = new EarthQuakeClient();
+        EarthQuakeClient eqc = new EarthQuakeClient();
         // eqc.bigQuakes();
         // eqc.closeToMe();
         // eqc.quakesOfDepth();
@@ -13,6 +13,6 @@ public class exercise1 {
         // cq.findClosestQuakes();
 
         LargestQuakes lq = new LargestQuakes();
-        lq.findLargestQuakes("nov20quakedatasmall.atom");
+        lq.findLargestQuakes("nov20quakedata.atom");
     }
 }

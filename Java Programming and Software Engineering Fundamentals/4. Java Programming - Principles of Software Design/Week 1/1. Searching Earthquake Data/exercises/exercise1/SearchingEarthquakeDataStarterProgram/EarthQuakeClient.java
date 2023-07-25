@@ -34,7 +34,7 @@ public class EarthQuakeClient {
     public ArrayList<QuakeEntry> filterByDepth(ArrayList<QuakeEntry> quakeData, double minDepth, double maxDepth) {
         ArrayList<QuakeEntry> answer = new ArrayList<QuakeEntry>();
         for (QuakeEntry qe: quakeData){
-            if ((qe.getDepth() >= (minDepth*1000)) && (qe.getDepth() <= (maxDepth*1000))){
+            if ((qe.getDepth() >= (minDepth)) && (qe.getDepth() <= (maxDepth))){
                 answer.add(qe);
             }
         }
@@ -127,19 +127,23 @@ public class EarthQuakeClient {
 
     public void quakesOfDepth(){
         EarthQuakeParser parser = new EarthQuakeParser();
-        String source = "nov20quakedatasmall.atom";
+        // String source = "nov20quakedatasmall.atom";
+        String source = "nov20quakedata.atom";
         ArrayList<QuakeEntry> list = parser.read(source);
         System.out.println("read data for "+list.size()+" quakes");
 
-        ArrayList<QuakeEntry> listFiltered = filterByDepth(list, -10000, 10000);
+        ArrayList<QuakeEntry> listFiltered = filterByDepth(list, -10000, -8000);
+        
         for (QuakeEntry qe: listFiltered){
             System.out.println(qe);
         }
+        System.out.println(listFiltered.size() + " earthquakes after filtering");
     }
 
     public void quakesByPhrase(){
         EarthQuakeParser parser = new EarthQuakeParser();
-        String source = "nov20quakedatasmall.atom";
+        // String source = "nov20quakedatasmall.atom";
+        String source = "nov20quakedata.atom";
         ArrayList<QuakeEntry> list = parser.read(source);
         System.out.println("read data for "+list.size()+" quakes");
 
@@ -147,6 +151,7 @@ public class EarthQuakeClient {
         for (QuakeEntry qe: listFiltered){
             System.out.println(qe);
         }
+        System.out.println(listFiltered.size() + " number of quakes found");
         
         System.out.println("+++++++++++++++++++++");
         listFiltered = filterByPhrase(list, "any", "Can");
@@ -159,6 +164,13 @@ public class EarthQuakeClient {
         for (QuakeEntry qe: listFiltered){
             System.out.println(qe);
         }
+
+        System.out.println("+++++++++++++++++++++");
+        listFiltered = filterByPhrase(list, "any", "Creek");
+        for (QuakeEntry qe: listFiltered){
+            System.out.println(qe);
+        }
+        System.out.println(listFiltered.size() + " number of quakes found");
     }
 
     public void createCSV(){
