@@ -1,19 +1,19 @@
 package exercise2.EarthquakeFilterStarterProgram;
 
-public class DepthFilter implements Filter {
+public class DepthFilterExcl implements Filter {
 
     private double minDepthFilter;
     private double maxDepthFilter;
     private String filterName;
 
-    public DepthFilter(double minDepth, double maxDepth, String name){
+    public DepthFilterExcl(double minDepth, double maxDepth, String name){
         minDepthFilter = minDepth;
         maxDepthFilter = maxDepth;
         filterName = name;
     }
 
     public boolean satisfies(QuakeEntry qe){
-        if ((qe.getDepth() >= minDepthFilter) && (qe.getDepth() <= maxDepthFilter)) {
+        if ((qe.getDepth() > minDepthFilter) && (qe.getDepth() < maxDepthFilter)) {
             return true;
         }
         return false;

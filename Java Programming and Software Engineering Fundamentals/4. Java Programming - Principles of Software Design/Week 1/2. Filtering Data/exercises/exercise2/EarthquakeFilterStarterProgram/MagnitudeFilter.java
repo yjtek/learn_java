@@ -3,10 +3,12 @@ package exercise2.EarthquakeFilterStarterProgram;
 public class MagnitudeFilter implements Filter {
     private double minMagFilter;
     private double maxMagFilter;
+    private String filterName;
     
-    public MagnitudeFilter(double minMag, double maxMag) {
+    public MagnitudeFilter(double minMag, double maxMag, String name) {
         minMagFilter = minMag;
         maxMagFilter = maxMag;
+        filterName = name;
     }
 
     public boolean satisfies(QuakeEntry qe) {
@@ -15,5 +17,10 @@ public class MagnitudeFilter implements Filter {
         }
         return false;
     }
+
+    public String getName(){
+        return filterName;
+    }
+
 
 }

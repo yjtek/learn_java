@@ -3,10 +3,12 @@ package exercise2.EarthquakeFilterStarterProgram;
 public class PhraseFilter implements Filter {
     private String requestType;
     private String searchPhrase;
+    private String filterName;
 
-    public PhraseFilter(String reqType, String phrase) {
+    public PhraseFilter(String reqType, String phrase, String name) {
         requestType = reqType;
         searchPhrase = phrase;
+        filterName = name;
     }
 
     public boolean satisfies(QuakeEntry qe){
@@ -26,5 +28,9 @@ public class PhraseFilter implements Filter {
             default:
                 return false;
         }
+    }
+
+    public String getName(){
+        return filterName;
     }
 }
