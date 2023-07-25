@@ -1,3 +1,4 @@
+package exercise2.EarthquakeFilterStarterProgram;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-
+package exercise1.EarthquakeFilterStarterProgram;
 public class QuakeEntry implements Comparable<QuakeEntry>{
 	
 	private Location myLocation;

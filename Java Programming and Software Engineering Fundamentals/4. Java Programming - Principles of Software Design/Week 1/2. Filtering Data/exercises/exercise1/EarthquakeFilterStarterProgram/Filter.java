@@ -1,3 +1,4 @@
+package exercise1.EarthquakeFilterStarterProgram;
 
 /**
  * Write a description of interface Filter here.

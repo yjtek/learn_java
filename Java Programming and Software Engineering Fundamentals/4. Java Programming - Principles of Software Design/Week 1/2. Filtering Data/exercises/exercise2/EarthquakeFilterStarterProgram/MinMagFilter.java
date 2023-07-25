@@ -1,4 +1,4 @@
-
+package exercise2.EarthquakeFilterStarterProgram;
 /**
  * Write a description of class MinMaxFilter here.
  * 

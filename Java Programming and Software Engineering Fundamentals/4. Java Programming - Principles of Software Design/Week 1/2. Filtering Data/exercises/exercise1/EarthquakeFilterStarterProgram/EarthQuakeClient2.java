@@ -1,5 +1,7 @@
+package exercise1.EarthquakeFilterStarterProgram;
+
 import java.util.*;
-import edu.duke.*;
+import exercise1.edu.duke.*;
 
 public class EarthQuakeClient2 {
     public EarthQuakeClient2() {
@@ -20,15 +22,33 @@ public class EarthQuakeClient2 {
     public void quakesWithFilter() { 
         EarthQuakeParser parser = new EarthQuakeParser(); 
         //String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
-        String source = "data/nov20quakedatasmall.atom";
+        // String source = "data/nov20quakedatasmall.atom";
+        String source = "nov20quakedatasmall.atom";
         ArrayList<QuakeEntry> list  = parser.read(source);         
         System.out.println("read data for "+list.size()+" quakes");
 
-        Filter f = new MinMagFilter(4.0); 
-        ArrayList<QuakeEntry> m7  = filter(list, f); 
-        for (QuakeEntry qe: m7) { 
+        // Filter f = new MinMagFilter(4.0);         
+        // ArrayList<QuakeEntry> m7  = filter(list, f); 
+        // for (QuakeEntry qe: m7) { 
+        //     System.out.println(qe);
+        // } 
+
+        // Filter f1 = new MagnitudeFilter(4.0, 5.0);
+        // Filter f2 = new DepthFilter(-35000.0, -12000.0);
+        // ArrayList<QuakeEntry> filteredList = filter(list, f1);
+        // filteredList = filter(filteredList, f2);
+        // for (QuakeEntry qe: filteredList) { 
+        //     System.out.println(qe);
+        // } 
+
+        Location tokyo = new Location(35.42, 139.43);
+        Filter f1 = new DistanceFilter(tokyo, 10_000_000);
+        Filter f2 = new PhraseFilter("end", "Japan");
+        ArrayList<QuakeEntry> filteredList = filter(list, f1);
+        filteredList = filter(filteredList, f2);
+        for (QuakeEntry qe: filteredList){
             System.out.println(qe);
-        } 
+        }
     }
 
     public void createCSV() {
