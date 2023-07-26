@@ -1,4 +1,4 @@
-
+package InterfaceAbstractStarterProgram;
 /**
  * Write a description of interface IMarkovModel here.
  * 
@@ -9,6 +9,6 @@
 public interface IMarkovModel {
     public void setTraining(String text);
     
-    public String getRandomText(int numChars);
+    public String getRandomText(int numChars, int seed);
     
 }
