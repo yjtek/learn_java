@@ -44,7 +44,7 @@ public class MarkovRunner {
         st = st.replace('\n', ' '); 
         // String st = "this is a test yes this is really a test";
         // String st = "this is a test yes this is really a test yes a test this is wow";
-        EfficientMarkovWord emw = new EfficientMarkovWord(6); 
+        EfficientMarkovWord emw = new EfficientMarkovWord(5); 
         runModel(emw, st, 50, 792); 
     }
 
