@@ -1,4 +1,4 @@
-
+package WordNGramStarterProgram;
 /**
  * Write a description of interface IMarkovModel here.
  * 

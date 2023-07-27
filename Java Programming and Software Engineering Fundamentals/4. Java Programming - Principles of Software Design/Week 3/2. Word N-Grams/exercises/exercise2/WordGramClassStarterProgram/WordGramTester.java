@@ -1,3 +1,5 @@
+package WordGramClassStarterProgram;
+
 import java.util.*;
 
 public class WordGramTester {

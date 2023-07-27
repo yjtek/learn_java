@@ -1,4 +1,4 @@
-
+package WordGramClassStarterProgram;
 /**
  * Write a description of interface IMarkovModel here.
  * 

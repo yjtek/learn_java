@@ -1,3 +1,4 @@
+package WordNGramStarterProgram;
 
 /**
  * Write a description of class MarkovRunner here.
@@ -29,11 +30,19 @@ public class MarkovRunner {
     } 
 
     public void runMarkov() { 
-        FileResource fr = new FileResource(); 
+        FileResource fr = new FileResource("confucius.txt"); 
         String st = fr.asString(); 
         st = st.replace('\n', ' '); 
         MarkovWordOne markovWord = new MarkovWordOne(); 
-        runModel(markovWord, st, 200); 
+        runModel(markovWord, st, 120, 139); 
+    } 
+
+    public void runMarkovTwo() { 
+        FileResource fr = new FileResource("confucius.txt"); 
+        String st = fr.asString(); 
+        st = st.replace('\n', ' '); 
+        MarkovWordTwo mwt = new MarkovWordTwo(); 
+        runModel(mwt, st, 120, 832); 
     } 
 
     private void printOut(String s){
@@ -50,5 +59,11 @@ public class MarkovRunner {
         } 
         System.out.println("\n----------------------------------");
     } 
+
+    public void testing() {
+        String trainingText = "this is just a test yes this is a simple test";
+        MarkovWordOne mwo = new MarkovWordOne(); 
+        runModel(mwo, trainingText, 50);
+    }
 
 }
