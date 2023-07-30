@@ -58,4 +58,8 @@ public class Rater {
         
         return list;
     }
+
+    public String toString() {
+        return "User ID: " + myID;
+    }
 }

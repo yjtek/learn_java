@@ -138,7 +138,77 @@ public class FirstRatings {
     }
 
     public void testLoadRaters() {
-        ArrayList<Rater> raters = loadRaters("ratings_short.csv");
-        System.out.println("Rater list has size: " + raters.size());
+        // ArrayList<Rater> raterList = loadRaters("ratings_short.csv");
+        ArrayList<Rater> raterList = loadRaters("ratings.csv");
+        System.out.println("Rater list has size: " + raterList.size());
+        // printRaterAndRatingCount(raterList);
+        printRaterAndRatingCount(raterList, "193");
+
+        System.out.println("Maximum rating count is: " + getMaxRatingCount(raterList));
+        System.out.println("Users with max rating count are: ");
+        printArrayListData(getMaxRatingCountRaters(raterList));
+
+        HashMap<String, Integer> movieIDToRatingCountMap = mapMovieIDToRatingCount(raterList);
+        System.out.println("Count of ratings for MoveID 1798709: " + getCountOfRatings(movieIDToRatingCountMap, "1798709"));
+        System.out.println("Count of movies rated total: " + getCountOfMoviesRated(movieIDToRatingCountMap));
     }
+
+    private void printRaterAndRatingCount(ArrayList<Rater> raterList) {
+        for (Rater r: raterList) {
+            System.out.println("Rater " + r.getID() + " || " + "Count ratings: " + r.numRatings());
+        }
+    }
+
+    private void printRaterAndRatingCount(ArrayList<Rater> raterList, String raterID) {
+        for (Rater r: raterList) {
+            if (r.getID().equals(raterID)){
+                System.out.println("Rater " + r.getID() + " || " + "Count ratings: " + r.numRatings());
+            }
+        }
+    }
+
+    private int getMaxRatingCount(ArrayList<Rater> raterList){
+        int maxCount = 0;
+        for (Rater r: raterList) {
+            if (r.numRatings() > maxCount) {
+                maxCount = r.numRatings();
+            }
+        }
+        return maxCount;
+    }
+
+    private ArrayList<Rater> getMaxRatingCountRaters(ArrayList<Rater> raterList){
+        ArrayList<Rater> raterListSubset = new ArrayList<Rater>();
+        int maxCount = getMaxRatingCount(raterList);
+        for (Rater r: raterList) {
+            if (r.numRatings() == maxCount) {
+                raterListSubset.add(r);
+            }
+        }
+        return raterListSubset;
+    }
+
+    private HashMap<String, Integer> mapMovieIDToRatingCount(ArrayList<Rater> raterList) {
+        HashMap<String, Integer> movieIDToRatingCount = new HashMap<String, Integer>();
+        for (Rater r: raterList) {
+            for (String ratedItem: r.getItemsRated()) {
+                if (movieIDToRatingCount.containsKey(ratedItem)) {
+                    movieIDToRatingCount.put(ratedItem, movieIDToRatingCount.get(ratedItem) + 1);
+                }
+                else {
+                    movieIDToRatingCount.put(ratedItem, 1);
+                }
+            }
+        }
+        return movieIDToRatingCount;
+    }
+    
+    private int getCountOfRatings(HashMap<String, Integer> movieIDToRatingCountMap, String movieID) { 
+        return movieIDToRatingCountMap.get(movieID);
+    }
+
+    private int getCountOfMoviesRated(HashMap<String, Integer> movieIDToRatingCountMap) {
+        return movieIDToRatingCountMap.size();
+    }
+
 }
