@@ -11,7 +11,13 @@ public class exercise {
         // mra.getAverageRatingOneMovie();
 
         MovieRunnerWithFilters mrwf = new MovieRunnerWithFilters();
-        mrwf.printAverageRatings();
-        
+        // mrwf.printAverageRatings();
+        // mrwf.printAverageRatingsByYear();
+        // mrwf.printAverageRatingsByGenre();
+        // mrwf.printAverageRatingsByMinutes();
+        // mrwf.printAverageRatingsByDirectors();
+        // mrwf.printAverageRatingsByYearAfterAndGenre();
+        mrwf.printAverageRatingsByDirectorsAndMinutes();
+
     }
 }
