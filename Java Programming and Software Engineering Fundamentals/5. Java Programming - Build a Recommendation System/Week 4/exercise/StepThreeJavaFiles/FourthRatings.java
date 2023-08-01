@@ -1,173 +1,175 @@
 package StepThreeJavaFiles;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Collections;
 
+
 public class FourthRatings {
-    // private ArrayList<Movie> myMovies;
-    // private ArrayList<EfficientRater> myRaters;
-    // private HashMap<String, ArrayList<Double>> mapMovieIDToRatings;
-    // private HashMap<String, String> mapMovieIDToMovieName;
     
     public FourthRatings() {
-        // default constructor
-        // this("ratedmoviesfull.csv", "ratings.csv");
-        // this("ratings.csv");
     }
 
-    public double getAverageByID(String id, int minimalRaters) {
-        Double sumRating = 0.0;
-        Integer countRating = 0;
+    public double getAverageByID(String movieID, int minimalRaters) {
+        Double sumMovieRating = 0.0;
+        Integer countMovieRating = 0;
         for (Rater r: RaterDatabase.getRaters()) {
-            if (r.getItemsRated().contains(id)) {
-                sumRating += r.getRating(id);
-                countRating++;
+            if (r.getItemsRated().contains(movieID)) {
+                sumMovieRating += r.getRating(movieID);
+                countMovieRating++;
             }
         }
 
-        if (countRating.equals(0) || countRating < minimalRaters) {
+        if (countMovieRating.equals(0) || countMovieRating < minimalRaters) {
             return 0.0;
         }
         else {
-            return sumRating/countRating;
+            return sumMovieRating/countMovieRating;
         }
     }
 
     public ArrayList<Rating> getAverageRatings(int minimalRaters) {
 
-        ArrayList<String> listOfMovieIDs = MovieDatabase.filterBy(new TrueFilter());
-        ArrayList<Rating> listOfAvgMovieRatings = new ArrayList<Rating>();
-        for (String movieID: listOfMovieIDs) {
+        ArrayList<String> allMovieIDs = MovieDatabase.filterBy(new TrueFilter());
+        ArrayList<Rating> avgMovieRatings = new ArrayList<Rating>();
+        for (String movieID: allMovieIDs) {
             if (getAverageByID(movieID, minimalRaters) != 0) {
-                listOfAvgMovieRatings.add(new Rating(movieID, getAverageByID(movieID, minimalRaters)));
+                avgMovieRatings.add(new Rating(movieID, getAverageByID(movieID, minimalRaters)));
             }
         }
-        return listOfAvgMovieRatings;
+        return avgMovieRatings;
     }
 
     public ArrayList<Rating> getAverageRatingByFilter(int minimalRaters, Filter filterCriteria) {
-        ArrayList<String> listOfMovieIDs = MovieDatabase.filterBy(filterCriteria);
-        ArrayList<Rating> listOfAvgMovieRatings = new ArrayList<Rating>();
-        for (String movieID: listOfMovieIDs) {
+        ArrayList<String> allMovieIDs = MovieDatabase.filterBy(filterCriteria);
+        ArrayList<Rating> avgMovieRatings = new ArrayList<Rating>();
+        for (String movieID: allMovieIDs) {
             if (getAverageByID(movieID, minimalRaters) != 0) {
-                listOfAvgMovieRatings.add(new Rating(movieID, getAverageByID(movieID, minimalRaters)));
+                avgMovieRatings.add(new Rating(movieID, getAverageByID(movieID, minimalRaters)));
             }
         }
-        return listOfAvgMovieRatings;
+        return avgMovieRatings;
     }
 
     private double dotProduct(Rater me, Rater r){
-        ArrayList<String> commonRatedMovies = new ArrayList<String>();
-        for (String myRated: me.getItemsRated()) {
-            if (r.getItemsRated().contains(myRated)) {
-                commonRatedMovies.add(myRated);
-            }
-        }
-
         double dotProductOutput = 0.0;
-        for (String commonMovie: commonRatedMovies){
-            dotProductOutput += (me.getRating(commonMovie) - 5) * (r.getRating(commonMovie) - 5);
+        for (String currMovieID: me.getItemsRated()) {
+            if (r.getItemsRated().contains(currMovieID)) {
+                dotProductOutput += (me.getRating(currMovieID) - 5) * (r.getRating(currMovieID) - 5);
+            }
         }
         return dotProductOutput;
     }
 
-    private ArrayList<Rating> getSimilarities(String id) {
+    private ArrayList<Rating> getSimilarities(String raterID) {
         ArrayList<Rater> allRaters = RaterDatabase.getRaters();
-        Rater me = RaterDatabase.getRater(id);
+        Rater me = RaterDatabase.getRater(raterID);
 
         ArrayList<Rating> similarityScore = new ArrayList<Rating>();
         for (Rater r: allRaters) {
             if (r.getID().equals(me.getID())) {
                 continue;
             }
-            similarityScore.add(new Rating(r.getID(), dotProduct(me, r)));
+            double score = dotProduct(me, r);
+            if (score > 0) {
+                similarityScore.add(new Rating(r.getID(), score));
+            }
         }
         Collections.sort(similarityScore, Collections.reverseOrder());
         return similarityScore;
     }
 
-    public double getAverageByIDSubset(String id, int minimalRaters, ArrayList<Rater> subsetRaters) {
-        Double sumRating = 0.0;
-        Integer countRating = 0;
-        for (Rater r: subsetRaters) {
-            if (r.getItemsRated().contains(id)) {
-                sumRating += r.getRating(id);
-                countRating++;
-            }
-        }
-
-        if (countRating.equals(0) || countRating < minimalRaters) {
-            return 0.0;
-        }
-        else {
-            return sumRating/countRating;
-        }
-    }
-
-    public ArrayList<Rating> getAverageRatingsSubset(int minimalRaters, ArrayList<Rater> subsetRaters) {
-
-        ArrayList<String> listOfMovieIDs = MovieDatabase.filterBy(new TrueFilter());
-        ArrayList<Rating> listOfAvgMovieRatings = new ArrayList<Rating>();
-        for (String movieID: listOfMovieIDs) {
-            if (getAverageByIDSubset(movieID, minimalRaters, subsetRaters) != 0) {
-                listOfAvgMovieRatings.add(new Rating(movieID, getAverageByID(movieID, minimalRaters)));
-            }
-        }
-        return listOfAvgMovieRatings;
-    }
-
-    public ArrayList<Rating> getSimilarRatings(String id, int numSimilarRaters, int minimalRaters) {
+    public HashMap<String, Double> makeRaterIDToSimilarityScoreHashmap(ArrayList<Rating> raterSimilarityScores) {
         
-        ArrayList<Rating> raterSimilarityScores = getSimilarities(id);
-        HashMap<String, Double> mapRaterSubsetToSimilarityScore = new HashMap<String, Double>();
-        int countSimilarRaters = 0;
+        HashMap<String, Double> mapRaterIDToSimilarityScore = new HashMap<String, Double>();
+        
         for (Rating r: raterSimilarityScores) {
-            if (r.getValue() > 0 && countSimilarRaters < numSimilarRaters) {
-                mapRaterSubsetToSimilarityScore.put(r.getItem(), r.getValue());
-                countSimilarRaters += 1;
+            if (mapRaterIDToSimilarityScore.containsKey(r.getItem())) {
+                System.exit(0);
             }
+            mapRaterIDToSimilarityScore.put(r.getItem(), r.getValue());
         }
+        return mapRaterIDToSimilarityScore;
+    }
+
+    public ArrayList<Rating> getSimilarRatings(String raterID, int numSimilarRaters, int minimalRaters) {
+        ArrayList<Rating> movieIDToWeightedAverageRating = new ArrayList<Rating>();
         
-        double totalScore = 0.0;
-        for (String rater: mapRaterSubsetToSimilarityScore.keySet()) {
-            totalScore += mapRaterSubsetToSimilarityScore.get(rater);
-        }
+        ArrayList<Rating> raterSubsetSimilarityScores = new ArrayList<>(getSimilarities(raterID).subList(0, numSimilarRaters));
+        HashMap<String, Double> mapRaterSubsetToSimilarityScore = makeRaterIDToSimilarityScoreHashmap(raterSubsetSimilarityScores);
 
-        for (String rater: mapRaterSubsetToSimilarityScore.keySet()) {
-            mapRaterSubsetToSimilarityScore.put(
-                rater, mapRaterSubsetToSimilarityScore.get(rater)/totalScore
-            );
-        }
+        ArrayList<String> allMovieID = MovieDatabase.filterBy(new TrueFilter());
 
+        // HashMap<String, Double> mapMovieIDToAdjRatings = new HashMap<String, Double>();
+        for (String movieID: allMovieID) {
 
-        ArrayList<String> allMovies = MovieDatabase.filterBy(new TrueFilter());
-        HashMap<String, ArrayList<Double>> mapRaterSubsetToRatings = new HashMap<String, ArrayList<Double>>();
-        ArrayList<Double> raterRating = new ArrayList<Double>();
-        for (String raterID: mapRaterSubsetToSimilarityScore.keySet()) {
-            raterRating = new ArrayList<Double>();
-            for (String m: allMovies) {
-                raterRating.add(RaterDatabase.getRater(raterID).getRating(m));
+            Double adjMovieRatingSum = 0.0;
+            int countMovieRating = 0;
+            Double weightedAverageRating;
+            
+            for (String currRaterID: mapRaterSubsetToSimilarityScore.keySet()) {
+                Rater currRater = RaterDatabase.getRater(currRaterID);
+                Double currRaterSimilarityScore = mapRaterSubsetToSimilarityScore.get(currRaterID);
+                Double currRaterAdjMovieRating = currRater.getRating(movieID) * currRaterSimilarityScore;
+                
+                // Only add to the summation if the rating is greater than 0 (because if movie is not rated, it returns -1)
+                if (currRaterAdjMovieRating > 0) {
+                    adjMovieRatingSum += currRaterAdjMovieRating;
+                    countMovieRating++;
+                }
+
             }
-            mapRaterSubsetToRatings.put(raterID, raterRating);
+            
+            if (countMovieRating != 0 && countMovieRating >= minimalRaters) {
+                weightedAverageRating = adjMovieRatingSum/countMovieRating;
+                Rating addCurrRating = new Rating(movieID, weightedAverageRating);
+                movieIDToWeightedAverageRating.add(addCurrRating);
+            }
         }
 
-        ArrayList<Double> myRatings = new ArrayList<Double>();
-        for (String m: allMovies) {
-            myRatings.add(RaterDatabase.getRater(id).getRating(m));
-        }
+        Collections.sort(movieIDToWeightedAverageRating, Collections.reverseOrder());
         
-        // mapRaterSubsetToSimilarityScore
-        HashMap<String, ArrayList<Double>> mapRaterToAdjustedRatings = new HashMap<String, ArrayList<Double>>();
-        for (String raterID: mapRaterSubsetToRatings.keySet()) {
-            ArrayList<Double> ratings = mapRaterSubsetToRatings.get(raterID);
-            Double normalisedSimilarity = mapRaterSubsetToSimilarityScore.get(raterID);
-            for (int i=0; i < ratings.size(); i++) {
-                ratings.set(i, ratings.get(i) * normalisedSimilarity);
+        return movieIDToWeightedAverageRating;
+    }
+
+    public ArrayList<Rating> getSimilarRatingsByFilter(String raterID, int numSimilarRaters, int minimalRaters, Filter f) {
+        ArrayList<Rating> movieIDToWeightedAverageRating = new ArrayList<Rating>();
+        
+        ArrayList<Rating> raterSubsetSimilarityScores = new ArrayList<>(getSimilarities(raterID).subList(0, numSimilarRaters));
+        HashMap<String, Double> mapRaterSubsetToSimilarityScore = makeRaterIDToSimilarityScoreHashmap(raterSubsetSimilarityScores);
+
+        ArrayList<String> allMovieID = MovieDatabase.filterBy(f);
+
+        // HashMap<String, Double> mapMovieIDToAdjRatings = new HashMap<String, Double>();
+        for (String movieID: allMovieID) {
+
+            Double adjMovieRatingSum = 0.0;
+            int countMovieRating = 0;
+            Double weightedAverageRating;
+            
+            for (String currRaterID: mapRaterSubsetToSimilarityScore.keySet()) {
+                Rater currRater = RaterDatabase.getRater(currRaterID);
+                Double currRaterSimilarityScore = mapRaterSubsetToSimilarityScore.get(currRaterID);
+                Double currRaterAdjMovieRating = currRater.getRating(movieID) * currRaterSimilarityScore;
+                
+                // Only add to the summation if the rating is greater than 0 (because if movie is not rated, it returns -1)
+                if (currRaterAdjMovieRating > 0) {
+                    adjMovieRatingSum += currRaterAdjMovieRating;
+                    countMovieRating++;
+                }
+
             }
-            mapRaterToAdjustedRatings.put(raterID, ratings);
+            
+            if (countMovieRating != 0 && countMovieRating >= minimalRaters) {
+                weightedAverageRating = adjMovieRatingSum/countMovieRating;
+                Rating addCurrRating = new Rating(movieID, weightedAverageRating);
+                movieIDToWeightedAverageRating.add(addCurrRating);
+            }
         }
 
-        allMovies
+        Collections.sort(movieIDToWeightedAverageRating, Collections.reverseOrder());
+        
+        return movieIDToWeightedAverageRating;
     }
 }
